@@ -87,6 +87,49 @@
 
   .toggle-bar { margin-bottom: 0.75rem; }
 
+  .btn-tema-fijo {
+    position: fixed;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 100;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  .resaltar-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .resaltar-btn {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+  }
+
+  .resaltar-btn.activo {
+    background: var(--accent);
+    color: white;
+  }
+
+  .dialogue.resaltando .line { opacity: 0.35; transition: opacity 0.15s; }
+  .dialogue.resaltar-jhon .line.jhon,
+  .dialogue.resaltar-camila .line.camila,
+  .dialogue.resaltar-melisa .line.melisa {
+    opacity: 1;
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+
   .dialogue-wrap {
     overflow-x: auto;
     overflow-y: hidden;
@@ -179,13 +222,19 @@
 </style>
 </head>
 <body>
+<button id="btn-tema" class="btn-tema-fijo" onclick="toggleTema()" title="Cambiar tema">🌙</button>
 <main>
   <h1>🏖️ Conversación: A Bad Vacation</h1>
   <p class="subtitle" style="text-align:left; margin-bottom:1.25rem;">Jhon cuenta a Camila y Melisa una mala experiencia de sus vacaciones.</p>
 
   <div class="toggle-bar">
     <button id="btn-translation" onclick="toggleTraduccion()">Mostrar traducción</button>
-    <button id="btn-tema" onclick="toggleTema()">🌙 Modo oscuro</button>
+  </div>
+
+  <div class="resaltar-bar">
+    <button class="resaltar-btn" id="btn-resaltar-jhon" onclick="resaltarPersona('jhon')">Texto de Jhon</button>
+    <button class="resaltar-btn" id="btn-resaltar-camila" onclick="resaltarPersona('camila')">Texto de Camila</button>
+    <button class="resaltar-btn" id="btn-resaltar-melisa" onclick="resaltarPersona('melisa')">Texto de Melisa</button>
   </div>
 
   <div class="dialogue-wrap" id="dialogue-wrap">
@@ -199,7 +248,7 @@
         <p class="text-es">¡Hola, Camila! ¡Hola, Melisa! ¡Qué gusto verlas de nuevo!</p>
       </div>
 
-      <div class="line">
+      <div class="line camila">
         <p class="speaker">Camila</p>
         <div class="en-row">
           <p class="text-en">Hi, Jhon! Hi, Melisa! It's great to see you too.</p>
@@ -208,7 +257,7 @@
         <p class="text-es">¡Hola, Jhon! ¡Hola, Melisa! A mí también me da gusto verlos.</p>
       </div>
 
-      <div class="line">
+      <div class="line melisa">
         <p class="speaker">Melisa</p>
         <div class="en-row">
           <p class="text-en">Hi, guys! How are you?</p>
@@ -226,7 +275,7 @@
         <p class="text-es">Yo estoy muy bien. ¡Los eché de menos a los dos! ¿Cómo estuvieron sus vacaciones?</p>
       </div>
 
-      <div class="line">
+      <div class="line camila">
         <p class="speaker">Camila</p>
         <div class="en-row">
           <p class="text-en">Mine was good, but I had a bad experience.</p>
@@ -235,7 +284,7 @@
         <p class="text-es">Las mías estuvieron bien, pero tuve una mala experiencia.</p>
       </div>
 
-      <div class="line">
+      <div class="line melisa">
         <p class="speaker">Melisa</p>
         <div class="en-row">
           <p class="text-en">Really? Me too! I also had a bad vacation experience.</p>
@@ -244,7 +293,7 @@
         <p class="text-es">¿En serio? ¡A mí también! Yo también tuve una mala experiencia de vacaciones.</p>
       </div>
 
-      <div class="line">
+      <div class="line camila">
         <p class="speaker">Camila</p>
         <div class="en-row">
           <p class="text-en">Okay, Jhon. How was your vacation?</p>
@@ -262,7 +311,7 @@
         <p class="text-es">Ok. Hace dos meses, fui a Santa Marta de vacaciones. Porque era verano, las playas estaban extremadamente llenas. Había gente gritando por todas partes, y realmente no disfruté eso.</p>
       </div>
 
-      <div class="line">
+      <div class="line melisa">
         <p class="question-tag">Pregunta 1 &rarr; Jhon</p>
         <p class="speaker">Melisa</p>
         <div class="en-row">
@@ -281,7 +330,7 @@
         <p class="text-es">Porque pensé que sería relajante. Pero eso no fue todo. Me perdí en el pueblo donde me estaba quedando.</p>
       </div>
 
-      <div class="line">
+      <div class="line camila">
         <p class="question-tag">Pregunta 2 &rarr; Jhon</p>
         <p class="speaker">Camila</p>
         <div class="en-row">
@@ -309,7 +358,7 @@
         <p class="text-es">Bueno, ya fue suficiente de hablar de mí. Melisa, ¿cómo te fue en tus vacaciones?</p>
       </div>
 
-      <div class="line">
+      <div class="line melisa">
         <p class="speaker">Melisa</p>
         <div class="en-row">
           <p class="text-en">Well, last year, I went to Cartagena with my mom. At first, everything was going well, but when we arrived at the hotel, I couldn't find my backpack. I was really worried.</p>
@@ -318,7 +367,7 @@
         <p class="text-es">Bueno, el año pasado fui a Cartagena con mi mamá. Al principio todo iba bien, pero cuando llegamos al hotel, no pude encontrar mi mochila. Estaba muy preocupada.</p>
       </div>
 
-      <div class="line">
+      <div class="line camila">
         <p class="speaker">Camila</p>
         <div class="en-row">
           <p class="text-en">Oh no! What happened?</p>
@@ -327,7 +376,7 @@
         <p class="text-es">¡Oh no! ¿Qué pasó?</p>
       </div>
 
-      <div class="line">
+      <div class="line melisa">
         <p class="speaker">Melisa</p>
         <div class="en-row">
           <p class="text-en">I realized I left my backpack on the bus. It had my charger and some money.</p>
@@ -346,7 +395,7 @@
         <p class="text-es">¿La recuperaste?</p>
       </div>
 
-      <div class="line">
+      <div class="line melisa">
         <p class="speaker">Melisa</p>
         <div class="en-row">
           <p class="text-en">Yes, I did. The bus driver found it, and I got it back a few hours later.</p>
@@ -355,7 +404,7 @@
         <p class="text-es">Sí. El conductor del bus la encontró, y la recuperé unas horas después.</p>
       </div>
 
-      <div class="line">
+      <div class="line melisa">
         <p class="speaker">Melisa</p>
         <div class="en-row">
           <p class="text-en">Anyway, that's enough about me. Camila, how was your vacation?</p>
@@ -364,7 +413,7 @@
         <p class="text-es">Bueno, ya fue suficiente de hablar de mí. Camila, ¿cómo te fue en tus vacaciones?</p>
       </div>
 
-      <div class="line">
+      <div class="line camila">
         <p class="speaker">Camila</p>
         <div class="en-row">
           <p class="text-en">Well, last year, I went to Santa Marta with my family. We had a great time because we visited the beach, ate delicious food, and enjoyed the beautiful weather. However, there was one problem.</p>
@@ -383,7 +432,7 @@
         <p class="text-es">¿En serio? ¿Qué pasó?</p>
       </div>
 
-      <div class="line">
+      <div class="line camila">
         <p class="speaker">Camila</p>
         <div class="en-row">
           <p class="text-en">The hotel wasn't very comfortable. The beds were uncomfortable, and we could hear all the noise from the street, especially at night.</p>
@@ -392,7 +441,7 @@
         <p class="text-es">El hotel no era muy cómodo. Las camas eran incómodas, y podíamos escuchar todo el ruido de la calle, especialmente en la noche.</p>
       </div>
 
-      <div class="line">
+      <div class="line melisa">
         <p class="speaker">Melisa</p>
         <div class="en-row">
           <p class="text-en">That sounds annoying. Were you able to sleep?</p>
@@ -401,7 +450,7 @@
         <p class="text-es">Eso suena molesto. ¿Pudiste dormir?</p>
       </div>
 
-      <div class="line">
+      <div class="line camila">
         <p class="speaker">Camila</p>
         <div class="en-row">
           <p class="text-en">Not very well, but we still enjoyed the rest of the trip. The beaches were amazing, so it was a nice vacation overall.</p>
@@ -418,7 +467,7 @@
     const atributo = document.documentElement.getAttribute('data-theme');
     const prefiereSistemaOscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const esOscuro = atributo ? atributo === 'dark' : prefiereSistemaOscuro;
-    document.getElementById('btn-tema').textContent = esOscuro ? '☀️ Modo claro' : '🌙 Modo oscuro';
+    document.getElementById('btn-tema').textContent = esOscuro ? '☀️' : '🌙';
   }
 
   function toggleTema() {
@@ -441,6 +490,22 @@
     const showing = document.getElementById('dialogue').classList.toggle('show-translation');
     btn.textContent = showing ? 'Ocultar traducción' : 'Mostrar traducción';
     ajustarAltura();
+  }
+
+  function resaltarPersona(nombre) {
+    const dialogo = document.getElementById('dialogue');
+    const clase = 'resaltar-' + nombre;
+    const yaActivo = dialogo.classList.contains(clase);
+
+    dialogo.classList.remove('resaltando', 'resaltar-jhon', 'resaltar-camila', 'resaltar-melisa');
+    document.querySelectorAll('.resaltar-btn').forEach(function (btn) {
+      btn.classList.remove('activo');
+    });
+
+    if (!yaActivo) {
+      dialogo.classList.add('resaltando', clase);
+      document.getElementById('btn-resaltar-' + nombre).classList.add('activo');
+    }
   }
 
   let audioActual = null;
