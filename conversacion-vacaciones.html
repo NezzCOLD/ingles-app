@@ -69,6 +69,18 @@
     column-fill: auto;
   }
 
+  @media (max-width: 700px) {
+    .dialogue-wrap {
+      overflow-x: visible;
+      overflow-y: visible;
+    }
+
+    .dialogue {
+      columns: unset;
+      height: auto !important;
+    }
+  }
+
   .line {
     background: var(--card-bg);
     border: 1px solid var(--border);
