@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escritura A1 - Inglés App</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main>
+  <a class="back-link" href="index.html">&larr; Volver al inicio</a>
+  <h1>✍️ Escritura (A1)</h1>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="completar" onclick="mostrarPestaña('completar')">Completar</button>
+    <button class="tab-btn" data-tab="ordenar" onclick="mostrarPestaña('ordenar')">Ordenar palabras</button>
+    <button class="tab-btn" data-tab="traducir" onclick="mostrarPestaña('traducir')">Traducir</button>
+  </div>
+
+  <!-- 1. Completar la oración -->
+  <section class="exercise-panel active" id="panel-completar">
+    <div class="exercise-box">
+      <p class="prompt" id="completar-prompt"></p>
+      <button onclick="verificarCompletar()">Verificar</button>
+      <button class="secondary" onclick="iniciarCompletar()">Siguiente</button>
+      <p class="feedback" id="completar-feedback"></p>
+      <p class="score" id="completar-score"></p>
+    </div>
+  </section>
+
+  <!-- 2. Ordenar las palabras -->
+  <section class="exercise-panel" id="panel-ordenar">
+    <div class="exercise-box">
+      <p class="prompt">Ordena las palabras para formar una oración correcta:</p>
+      <div class="word-bank" id="ordenar-banco"></div>
+      <div class="answer-area" id="ordenar-respuesta"></div>
+      <button onclick="verificarOrdenar()">Verificar</button>
+      <button class="secondary" onclick="reiniciarOrdenar()">Reiniciar</button>
+      <button class="secondary" onclick="iniciarOrdenar()">Siguiente</button>
+      <p class="feedback" id="ordenar-feedback"></p>
+      <p class="score" id="ordenar-score"></p>
+    </div>
+  </section>
+
+  <!-- 3. Traducir la oración -->
+  <section class="exercise-panel" id="panel-traducir">
+    <div class="exercise-box">
+      <p class="prompt">Traduce al inglés:</p>
+      <p class="prompt" id="traducir-prompt"></p>
+      <textarea id="traducir-input" placeholder="Escribe tu traducción aquí..."></textarea>
+      <div>
+        <button onclick="verRespuestaTraducir()">Ver respuesta</button>
+        <button class="secondary" onclick="iniciarTraducir()">Siguiente</button>
+      </div>
+      <p class="model-answer" id="traducir-modelo" style="display:none;"></p>
+      <div id="traducir-autoeval" style="display:none;">
+        <p>¿Tu respuesta fue correcta?</p>
+        <button onclick="autoevaluarTraducir(true)">Sí, era correcta</button>
+        <button class="secondary" onclick="autoevaluarTraducir(false)">Necesito practicar</button>
+      </div>
+      <p class="score" id="traducir-score"></p>
+    </div>
+  </section>
+</main>
+
+<script src="js/data-escritura.js"></script>
+<script src="js/escritura.js"></script>
+</body>
+</html>
