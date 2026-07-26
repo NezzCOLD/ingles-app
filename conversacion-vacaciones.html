@@ -15,6 +15,35 @@
     --correct: #1f9d55;
     --incorrect: #d64545;
     --border: #e0e0e6;
+    --jhon-bg: #eef0fb;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14161f;
+      --card-bg: #1e212d;
+      --text: #eaeaf0;
+      --muted: #a2a6b5;
+      --accent: #7c93ff;
+      --accent-dark: #a5b4ff;
+      --correct: #3ddc84;
+      --incorrect: #ff7a7a;
+      --border: #333849;
+      --jhon-bg: #232842;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #14161f;
+    --card-bg: #1e212d;
+    --text: #eaeaf0;
+    --muted: #a2a6b5;
+    --accent: #7c93ff;
+    --accent-dark: #a5b4ff;
+    --correct: #3ddc84;
+    --incorrect: #ff7a7a;
+    --border: #333849;
+    --jhon-bg: #232842;
   }
 
   * { box-sizing: border-box; }
@@ -96,7 +125,7 @@
   }
 
   .line.jhon {
-    background: #eef0fb;
+    background: var(--jhon-bg);
     border-color: var(--accent);
   }
 
@@ -156,6 +185,7 @@
 
   <div class="toggle-bar">
     <button id="btn-translation" onclick="toggleTraduccion()">Mostrar traducción</button>
+    <button id="btn-tema" onclick="toggleTema()">🌙 Modo oscuro</button>
   </div>
 
   <div class="dialogue-wrap" id="dialogue-wrap">
@@ -384,6 +414,28 @@
 </main>
 
 <script>
+  function actualizarBotonTema() {
+    const atributo = document.documentElement.getAttribute('data-theme');
+    const prefiereSistemaOscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const esOscuro = atributo ? atributo === 'dark' : prefiereSistemaOscuro;
+    document.getElementById('btn-tema').textContent = esOscuro ? '☀️ Modo claro' : '🌙 Modo oscuro';
+  }
+
+  function toggleTema() {
+    const actual = document.documentElement.getAttribute('data-theme');
+    const nuevo = actual === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nuevo);
+    localStorage.setItem('tema', nuevo);
+    actualizarBotonTema();
+  }
+
+  (function inicializarTema() {
+    const guardado = localStorage.getItem('tema');
+    if (guardado) {
+      document.documentElement.setAttribute('data-theme', guardado);
+    }
+  })();
+
   function toggleTraduccion() {
     const btn = document.getElementById('btn-translation');
     const showing = document.getElementById('dialogue').classList.toggle('show-translation');
@@ -412,6 +464,7 @@
   window.addEventListener('resize', ajustarAltura);
   window.addEventListener('load', ajustarAltura);
   ajustarAltura();
+  actualizarBotonTema();
 </script>
 </body>
 </html>
