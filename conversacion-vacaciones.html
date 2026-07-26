@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversación: Vacaciones - Inglés App</title>
+<style>
+  :root {
+    --bg: #f5f6fa;
+    --card-bg: #ffffff;
+    --text: #222;
+    --muted: #666;
+    --accent: #3457d5;
+    --accent-dark: #2942ab;
+    --correct: #1f9d55;
+    --incorrect: #d64545;
+    --border: #e0e0e6;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: system-ui, "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  h1 { margin: 0 0 0.25rem; }
+  .subtitle { margin: 0; color: var(--muted); }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  button {
+    padding: 0.55rem 1.1rem;
+    font-size: 0.95rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  button:hover { background: var(--accent-dark); }
+
+  main.wide { max-width: 1200px; }
+
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .dialogue {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .line {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .line.jhon {
+    background: #eef0fb;
+    border-color: var(--accent);
+  }
+
+  .speaker {
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 0.15rem;
+    font-size: 0.78rem;
+  }
+
+  .line.jhon .speaker { color: var(--accent-dark); }
+
+  .question-tag {
+    color: var(--incorrect);
+    font-weight: 700;
+    font-size: 0.78rem;
+    margin: 0 0 0.15rem;
+  }
+
+  .en-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.4rem;
+  }
+
+  .text-en { margin: 0; font-size: 0.85rem; line-height: 1.3; }
+
+  .speak-btn {
+    flex: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    padding: 0 0 0 0.2rem;
+    line-height: 1.3;
+  }
+
+  .speak-btn:hover { opacity: 0.7; }
+
+  .text-es {
+    margin: 0.2rem 0 0;
+    color: var(--muted);
+    font-style: italic;
+    font-size: 0.8rem;
+    line-height: 1.3;
+    display: none;
+  }
+
+  .show-translation .text-es { display: block; }
+
+  .toggle-bar { margin-bottom: 1rem; }
+
+  @media (max-width: 700px) {
+    .columns { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main class="wide">
+  <a class="back-link" href="index.html">&larr; Volver al inicio</a>
+  <h1>🏖️ Conversación: A Bad Vacation</h1>
+  <p class="subtitle" style="text-align:left; margin-bottom:1.25rem;">Jhon cuenta a Camila y Melisa una mala experiencia de sus vacaciones.</p>
+
+  <div class="toggle-bar">
+    <button id="btn-translation" onclick="toggleTraduccion()">Mostrar traducción</button>
+  </div>
+
+  <div class="columns" id="columns">
+    <div class="dialogue" id="parte1">
+      <div class="line jhon">
+        <p class="speaker">Jhon</p>
+        <div class="en-row">
+          <p class="text-en">Hi, Camila! Hi, Melisa! It's so nice to see you again!</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">¡Hola, Camila! ¡Hola, Melisa! ¡Qué gusto verlas de nuevo!</p>
+      </div>
+
+      <div class="line">
+        <p class="speaker">Camila</p>
+        <div class="en-row">
+          <p class="text-en">Hi, Jhon! Hi, Melisa! It's great to see you too.</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">¡Hola, Jhon! ¡Hola, Melisa! A mí también me da gusto verlos.</p>
+      </div>
+
+      <div class="line">
+        <p class="speaker">Melisa</p>
+        <div class="en-row">
+          <p class="text-en">Hi, guys! How are you?</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">¡Hola, chicos! ¿Cómo están?</p>
+      </div>
+
+      <div class="line jhon">
+        <p class="speaker">Jhon</p>
+        <div class="en-row">
+          <p class="text-en">I'm doing great. I missed you both!</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">Yo estoy muy bien. ¡Los eché de menos a los dos!</p>
+      </div>
+
+      <div class="line jhon">
+        <p class="speaker">Jhon</p>
+        <div class="en-row">
+          <p class="text-en">How was your vacation?</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">¿Cómo estuvieron sus vacaciones?</p>
+      </div>
+
+      <div class="line">
+        <p class="speaker">Camila</p>
+        <div class="en-row">
+          <p class="text-en">Mine was good, but I had a bad experience.</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">Las mías estuvieron bien, pero tuve una mala experiencia.</p>
+      </div>
+
+      <div class="line">
+        <p class="speaker">Melisa</p>
+        <div class="en-row">
+          <p class="text-en">Really? Me too! I also had a bad vacation experience.</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">¿En serio? ¡A mí también! Yo también tuve una mala experiencia de vacaciones.</p>
+      </div>
+
+      <div class="line jhon">
+        <p class="speaker">Jhon</p>
+        <div class="en-row">
+          <p class="text-en">Oh, wow! It sounds like we have a lot to talk about. Why don't we share our stories?</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">¡Vaya! Parece que tenemos mucho de qué hablar. ¿Por qué no compartimos nuestras historias?</p>
+      </div>
+
+      <div class="line">
+        <p class="speaker">Camila</p>
+        <div class="en-row">
+          <p class="text-en">That's a great idea! Jhon, do you want to go first?</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">¡Es una gran idea! Jhon, ¿quieres empezar tú?</p>
+      </div>
+    </div>
+
+    <div class="dialogue" id="parte2">
+      <div class="line jhon">
+        <p class="speaker">Jhon</p>
+        <div class="en-row">
+          <p class="text-en">Ok. Two months ago, I went to Santa Marta for my vacation. But because it was summer, the beaches were extremely crowded. There were people shouting everywhere, and I really didn't enjoy that.</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">Ok. Hace dos meses, fui a Santa Marta de vacaciones. Pero porque era verano, las playas estaban extremadamente llenas. Había gente gritando por todas partes, y realmente no disfruté eso.</p>
+      </div>
+
+      <div class="line">
+        <p class="question-tag">Pregunta 1 &rarr; Jhon</p>
+        <p class="speaker">Melisa</p>
+        <div class="en-row">
+          <p class="text-en">If you didn't like hearing people shout, why did you choose a beach for your vacation?</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">Si no te gusta oír a la gente gritar, ¿por qué elegiste una playa para tus vacaciones?</p>
+      </div>
+
+      <div class="line jhon">
+        <p class="speaker">Jhon</p>
+        <div class="en-row">
+          <p class="text-en">Because I thought it would be relaxing, and I wanted to get some sun from time to time. But that wasn't all. Because I traveled alone, I got lost in the town where I was staying.</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">Porque pensé que sería relajante, y quería tomar el sol de vez en cuando. Pero eso no fue todo. Porque viajé solo, me perdí en el pueblo donde me estaba quedando.</p>
+      </div>
+
+      <div class="line">
+        <p class="question-tag">Pregunta 2 &rarr; Jhon</p>
+        <p class="speaker">Camila</p>
+        <div class="en-row">
+          <p class="text-en">Really? What did you do?</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">¿En serio? ¿Qué hiciste?</p>
+      </div>
+
+      <div class="line jhon">
+        <p class="speaker">Jhon</p>
+        <div class="en-row">
+          <p class="text-en">It took me three hours to find my hotel again. It was honestly the worst vacation experience I've ever had.</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">Me tomó tres horas volver a encontrar mi hotel. Honestamente fue la peor experiencia de vacaciones que he tenido.</p>
+      </div>
+
+      <div class="line jhon">
+        <p class="speaker">Jhon</p>
+        <div class="en-row">
+          <p class="text-en">Anyway, that's enough about me. Melisa, how was your vacation?</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">Bueno, ya fue suficiente de hablar de mí. Melisa, ¿cómo te fue en tus vacaciones?</p>
+      </div>
+
+      <div class="line">
+        <p class="speaker">Melisa</p>
+        <div class="en-row">
+          <p class="text-en">Well, last year, I went to Cartagena with my mom. At first, everything was going well, but when we arrived at the hotel, I couldn't find my backpack. I was really worried.</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">Bueno, el año pasado fui a Cartagena con mi mamá. Al principio todo iba bien, pero cuando llegamos al hotel, no pude encontrar mi mochila. Estaba muy preocupada.</p>
+      </div>
+
+      <div class="line">
+        <p class="speaker">Camila</p>
+        <div class="en-row">
+          <p class="text-en">Oh no! What happened?</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">¡Oh no! ¿Qué pasó?</p>
+      </div>
+
+      <div class="line">
+        <p class="speaker">Melisa</p>
+        <div class="en-row">
+          <p class="text-en">I realized I left my backpack on the bus. It had my charger and some money.</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">Me di cuenta de que dejé mi mochila en el bus. Tenía mi cargador y algo de dinero.</p>
+      </div>
+
+      <div class="line jhon">
+        <p class="speaker">Jhon</p>
+        <div class="en-row">
+          <p class="text-en">Did you get it back?</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">¿La recuperaste?</p>
+      </div>
+
+      <div class="line">
+        <p class="speaker">Melisa</p>
+        <div class="en-row">
+          <p class="text-en">Yes, I did. The bus driver found it, and I got it back a few hours later.</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">Sí. El conductor del bus la encontró, y la recuperé unas horas después.</p>
+      </div>
+
+      <div class="line">
+        <p class="speaker">Melisa</p>
+        <div class="en-row">
+          <p class="text-en">Anyway, that's enough about me. Camila, how was your vacation?</p>
+          <button class="speak-btn" onclick="hablar(this)" title="Escuchar">🔊</button>
+        </div>
+        <p class="text-es">Bueno, ya fue suficiente de hablar de mí. Camila, ¿cómo te fue en tus vacaciones?</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  function toggleTraduccion() {
+    const btn = document.getElementById('btn-translation');
+    const showing = document.getElementById('columns').classList.toggle('show-translation');
+    btn.textContent = showing ? 'Ocultar traducción' : 'Mostrar traducción';
+  }
+
+  function hablar(boton) {
+    const texto = boton.previousElementSibling.textContent;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(texto);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.95;
+    window.speechSynthesis.speak(utterance);
+  }
+</script>
+</body>
+</html>
