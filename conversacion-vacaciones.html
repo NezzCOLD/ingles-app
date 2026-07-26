@@ -127,7 +127,8 @@
   .dialogue.resaltar-camila .line.camila,
   .dialogue.resaltar-melisa .line.melisa {
     opacity: 1;
-    box-shadow: 0 0 0 2px var(--accent);
+    border: 2px solid var(--accent);
+    padding: calc(0.5rem - 1px) calc(0.75rem - 1px);
   }
 
   .dialogue-wrap {
@@ -162,9 +163,14 @@
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 0.5rem 0.75rem;
-    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid-column;
+    display: inline-block;
+    width: 100%;
     margin-bottom: 0.6rem;
     max-width: 100%;
+    vertical-align: top;
   }
 
   .line.jhon {
