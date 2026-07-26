@@ -27,9 +27,9 @@
   }
 
   main {
-    max-width: 720px;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 1.5rem;
+    padding: 1.25rem 1.5rem;
   }
 
   h1 { margin: 0 0 0.25rem; }
@@ -56,18 +56,17 @@
 
   button:hover { background: var(--accent-dark); }
 
-  main.wide { max-width: 1200px; }
+  .toggle-bar { margin-bottom: 0.75rem; }
 
-  .columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
+  .dialogue-wrap {
+    overflow-x: auto;
+    overflow-y: hidden;
   }
 
   .dialogue {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    columns: 280px;
+    column-gap: 1.25rem;
+    column-fill: auto;
   }
 
   .line {
@@ -75,6 +74,8 @@
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 0.5rem 0.75rem;
+    break-inside: avoid;
+    margin-bottom: 0.6rem;
   }
 
   .line.jhon {
@@ -129,16 +130,10 @@
   }
 
   .show-translation .text-es { display: block; }
-
-  .toggle-bar { margin-bottom: 1rem; }
-
-  @media (max-width: 700px) {
-    .columns { grid-template-columns: 1fr; }
-  }
 </style>
 </head>
 <body>
-<main class="wide">
+<main>
   <a class="back-link" href="index.html">&larr; Volver al inicio</a>
   <h1>🏖️ Conversación: A Bad Vacation</h1>
   <p class="subtitle" style="text-align:left; margin-bottom:1.25rem;">Jhon cuenta a Camila y Melisa una mala experiencia de sus vacaciones.</p>
@@ -147,8 +142,8 @@
     <button id="btn-translation" onclick="toggleTraduccion()">Mostrar traducción</button>
   </div>
 
-  <div class="columns" id="columns">
-    <div class="dialogue" id="parte1">
+  <div class="dialogue-wrap" id="dialogue-wrap">
+    <div class="dialogue" id="dialogue">
       <div class="line jhon">
         <p class="speaker">Jhon</p>
         <div class="en-row">
@@ -229,9 +224,7 @@
         </div>
         <p class="text-es">¡Es una gran idea! Jhon, ¿quieres empezar tú?</p>
       </div>
-    </div>
 
-    <div class="dialogue" id="parte2">
       <div class="line jhon">
         <p class="speaker">Jhon</p>
         <div class="en-row">
@@ -348,8 +341,9 @@
 <script>
   function toggleTraduccion() {
     const btn = document.getElementById('btn-translation');
-    const showing = document.getElementById('columns').classList.toggle('show-translation');
+    const showing = document.getElementById('dialogue').classList.toggle('show-translation');
     btn.textContent = showing ? 'Ocultar traducción' : 'Mostrar traducción';
+    ajustarAltura();
   }
 
   function hablar(boton) {
@@ -360,6 +354,17 @@
     utterance.rate = 0.95;
     window.speechSynthesis.speak(utterance);
   }
+
+  function ajustarAltura() {
+    const wrap = document.getElementById('dialogue-wrap');
+    const top = wrap.getBoundingClientRect().top;
+    const altura = window.innerHeight - top - 20;
+    document.getElementById('dialogue').style.height = altura + 'px';
+  }
+
+  window.addEventListener('resize', ajustarAltura);
+  window.addEventListener('load', ajustarAltura);
+  ajustarAltura();
 </script>
 </body>
 </html>
